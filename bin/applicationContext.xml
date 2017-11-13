@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Scan all the components -->
+	<context:component-scan base-package="com.ymeng.annotation"></context:component-scan>	
+	
+	<!-- Load the properties file: sport.properties -->
+	<context:property-placeholder location="classpath:sport.properties"/>
+	
+    <!-- Define your beans here -->
+    <bean id = "myFortune"
+    	class="com.ymeng.springdemo.HappyFortuneService">
+    </bean>
+    
+     <bean id = "randomFortune"
+    	class="com.ymeng.springdemo.RandomFortuneService">
+    </bean>
+    
+    <bean id ="myCoach" 
+    	class="com.ymeng.springdemo.TrackCoach">
+    	<constructor-arg ref = "myFortune" />
+    </bean>
+    
+    <bean id="myCricketCoach"
+    	class="com.ymeng.springdemo.CricketCoach"
+    	scope ="prototype">
+    	
+    	<property name="fortuneService" ref="randomFortune"></property>	
+    	<property name="emailAddress" value="${foo.email}"></property>
+    	<property name="team" value="${foo.team}"></property>
+    </bean>
+    
+</beans>
+
+
+
+
+
